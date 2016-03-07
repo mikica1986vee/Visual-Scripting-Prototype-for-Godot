@@ -68,7 +68,7 @@ func get_valid_path_with_class(node_path, class_name):
 			
 	return null
 
-func enable_effect(): #must be called by derived classes in add_on_start_effect
+func enable_effect(): #must be called by derived classes in add_on_start_effect if they are done over time
 	set_process(not _use_fixed_process)
 	set_fixed_process(_use_fixed_process)
 	add_on_enable_effect()
@@ -80,7 +80,7 @@ func disable_effect():
 	add_on_disable_effect()
 	pass
 
-func effect_is_done():
+func effect_is_done(): #must be called by derived class if it called enable_effect. No need to call it during fast forward.
 	disable_effect()
 	add_on_effect_is_done()
 	pass
@@ -106,13 +106,13 @@ func fast_forward():
 #/public
 
 #template pattern stuff
-func add_on_prepare_effect(): #happens before delay
+func add_on_prepare_effect(): #happens only once, before delay
 	pass
 	
-func add_on_start_effect(): #happens after delay
+func add_on_start_effect(): #happens after delay every time effect is played
 	pass
 	
-func add_on_process_effect(dt): #starts happening after delay, will be called AT LEAST once
+func add_on_process_effect(dt): #starts happening after delay, will be called only if you call enable_effect() in add_on_start_effect()
 	pass
 	
 func add_on_effect_is_done():
@@ -164,9 +164,10 @@ func _process_effect(dt):
 		if _delay_timer < 0:
 			disable_effect()
 			_start_effect()
-			add_on_process_effect(-_delay_timer)
 			if is_effect_done():
 				effect_is_done()
+			else:
+				add_on_process_effect(-_delay_timer)
 			pass
 	else:
 		add_on_process_effect(dt)

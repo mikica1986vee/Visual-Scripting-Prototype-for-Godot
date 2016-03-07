@@ -31,13 +31,11 @@ func add_on_start_effect():
 	_starting_rotation = _get_rot_type_rot()
 	_old_rotation = 0.0
 	
-	enable_effect()
+	if _target:
+		enable_effect()
 	pass
 	
 func add_on_process_effect(dt):
-	if _target == null: #think about this
-		return
-		
 	_duration_timer += dt
 	
 	var norm_de = _duration_timer
