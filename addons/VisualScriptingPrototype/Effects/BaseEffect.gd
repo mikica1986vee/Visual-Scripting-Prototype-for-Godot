@@ -1,73 +1,27 @@
 
 extends Node
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
+const ValidationUtils = preload("../Utils/ValidationUtils.gd")
 
 export var delay = 0.0
 
 #public
 
 func get_valid_path_with_property(node_path, property):
-	if get_parent() == null:
-		return node_path #deserialization
-	if node_path != null:
-		var node = get_node(node_path)
-		if node != null and property in node:
-			return node_path
-			
-	return null
+	return ValidationUtils.get_valid_path_with_property(self, node_path, property)
 	
 func get_valid_path_with_properties(node_path, properties):
-	if get_parent() == null:
-		return node_path #deserialization
-	if node_path != null:
-		var node = get_node(node_path)
-		
-		for p in properties:
-			if not p in node:
-				return null
-		
-		return node_path
-	
-	return null
+	return ValidationUtils.get_valid_path_with_properties(self, node_path, properties)
 
 func get_valid_path_with_method(node_path, method_name):
-	if get_parent() == null:
-		return node_path #deserialization
-	if node_path != null:
-		var node = get_node(node_path)
-		if node != null and node.has_method(method_name):
-			return node_path
-	
-	return null
+	return ValidationUtils.get_valid_path_with_method(self, node_path, method_name)
 	
 func get_valid_path_with_methods(node_path, method_names):
-	if get_parent() == null:
-		return node_path #deserialization
-		
-	if node_path != null:
-		var node = get_node(node_path)
-		
-		for m in method_names:
-			if not node.has_method(m):
-				return null
-		
-		return node_path
-	
-	return null
+	return ValidationUtils.get_valid_path_with_methods(self, node_path, method_names)
 	
 func get_valid_path_with_class(node_path, class_name):
-	if get_parent() == null:
-		return node_path #deserialization
-	if node_path != null:
-		var node = get_node(node_path)
-		if node != null and node extends class_name:
-			return node_path
-			
-	return null
-
+	return ValidationUtils.get_valid_path_with_class(self, node_path, class_name)
+	
 func enable_effect(): #must be called by derived classes in add_on_start_effect if they are done over time
 	set_process(not _use_fixed_process)
 	set_fixed_process(_use_fixed_process)
