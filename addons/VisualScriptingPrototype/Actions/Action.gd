@@ -25,6 +25,7 @@ func add_on_fast_forward():
 	
 func _do_play_action(): #bool
 	if _effects == null or _effects_arranged_by_delay:
+		_effects = null #to force _get_effects()
 		_get_effects()
 		
 	for e in _effects:
