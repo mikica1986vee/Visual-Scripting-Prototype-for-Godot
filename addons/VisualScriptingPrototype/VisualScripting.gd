@@ -101,7 +101,7 @@ func _load_scripts_r(dir, list, base_type_name):
 					pass #icon = name + '.png' #need to load as Texture
 					
 				var localized_path = _localize_path( dir.get_current_dir())
-				var proj_path = Globals.globalize_path("res://")
+				var proj_path = _get_global_res_path()
 				list.append([name, base_type_name, load(localized_path + '/' + next), icon])
 			pass
 	
@@ -116,7 +116,7 @@ func _localize_path(path):
 	if path.begins_with("res://"):
 		return path
 		
-	var proj_path = Globals.globalize_path("res://")
+	var proj_path = _get_global_res_path()
 	var pos = path.find(proj_path)
 	if pos < 0:
 		print("can't localize path! " + path)
@@ -137,3 +137,6 @@ func _add_custom_types(custom_types):
 func _remove_custom_types(custom_types):
 	for t in custom_types:
 		remove_custom_type(t[0])
+		
+func _get_global_res_path():
+	return ProjectSettings.globalize_path("res://")

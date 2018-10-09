@@ -53,7 +53,7 @@ static func get_valid_path_with_class(caller, node_path, class_name):
 		return node_path #deserialization
 	if node_path != null:
 		var node = caller.get_node(node_path)
-		if node != null and node extends class_name:
+		if node != null and node is class_name:
 			return node_path
 			
 	return null

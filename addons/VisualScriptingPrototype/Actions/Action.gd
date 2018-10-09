@@ -44,7 +44,7 @@ func _get_effects():
 	_effects = []
 	
 	for child in get_children():
-		if child extends BaseEffect:
+		if child is BaseEffect:
 			_effects.append(child)
 			
 	_effects_arranged_by_delay = false

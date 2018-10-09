@@ -175,7 +175,7 @@ func _on_action_done_path_set(path):
 		
 	var action = get_node(path)
 	
-	if action != null and action != self and action extends get_script():
+	if action != null and action != self and action is get_script():
 		on_action_done_path = path
 		_on_action_done = action
 		pass
